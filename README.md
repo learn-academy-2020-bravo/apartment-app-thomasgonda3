@@ -13,6 +13,6 @@ Story: As a logged in user, I can go to a new apartment page with a form and cre
 
 Story:: As a logged in user, I can edit the information for any apartment I have created, but I cannot edit the information for apartments that belong to someone else
 
-Story: As a logged in user, I should be able to log out
+Story * : As a logged in user, I should be able to log out
 
-Story: As a registered user who has not logged in, I can go to a login page
+Story * : As a registered user who has not logged in, I can go to a login page

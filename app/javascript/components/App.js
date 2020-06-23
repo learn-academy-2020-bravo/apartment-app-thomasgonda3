@@ -41,10 +41,18 @@ class App extends React.Component {
       sign_out_route
     } = this.props
 
-    const apartments = this.state.apartments.map((value, index) => {
-      let manager = this.state.managers.filter((obj) => value.manager_id === obj.id)[0]
-      return <p key={index}>Property at {value.street} {value.city}, {value.state} {value.zip} in {value.country}.  Managed by {manager.contact}.  Available to discuss at {manager.hours} at {manager.phone}.</p>
-    })
+    //displays apartment data, the if statement catches if the fetch is too slow and doesnt activate before this function activates.
+    var apartments = []
+    if (this.state.apartments.length > 0 && this.state.managers.length > 0) {
+      apartments = this.state.apartments.map((value, index) => {
+        let manager = this.state.managers.filter((obj) => value.manager_id === obj.id)[0]
+        return <div key={index + 1}>
+                  <h3>Apartment {index + 1}</h3>
+                  <p>Property at {value.street} {value.city}, {value.state} {value.zip} in {value.country}.</p>
+                  <p>Managed by {manager.contact}.  Available to discuss at {manager.hours} at {manager.phone}.</p>
+               </div>
+      })
+    }
 
     return (
       <React.Fragment>

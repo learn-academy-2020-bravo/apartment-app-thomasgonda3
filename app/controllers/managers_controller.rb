@@ -1,11 +1,11 @@
 class ManagersController < ApplicationController
   def index
-    @managers = Manager.all
+    @managers = User.all
     render json: @managers
   end
 
   def show
-    @manager = Manager.find([params[:id]])
+    @manager = User.find([params[:id]])
     render json: @manager
   end
 end

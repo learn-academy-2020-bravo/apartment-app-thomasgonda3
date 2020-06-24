@@ -6,7 +6,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       apartments: [],
-      managers: []
+      managers: [],
+      currentApartment: -1
     }
   }
 
@@ -33,6 +34,13 @@ class App extends React.Component {
       .catch(() => this.props.history.push("/"))
   }
 
+  selectApartment = (value) => {
+    this.setState({ currentApartment: value })
+  }
+
+  showAll = () => {
+    this.setState({ currentApartment: -1 })
+  }
 
   render () {
     const {
@@ -45,11 +53,23 @@ class App extends React.Component {
     var apartments = []
     if (this.state.apartments.length > 0 && this.state.managers.length > 0) {
       apartments = this.state.apartments.map((value, index) => {
-        let manager = this.state.managers.filter((obj) => value.manager_id === obj.id)[0]
+        let manager = this.state.managers.filter((obj) => value.user_id === obj.id)[0]
         return <div key={index + 1}>
-                  <h3>Apartment {index + 1}</h3>
-                  <p>Property at {value.street} {value.city}, {value.state} {value.zip} in {value.country}.</p>
-                  <p>Managed by {manager.contact}.  Available to discuss at {manager.hours} at {manager.phone}.</p>
+                { (this.state.currentApartment === - 1 || this.state.currentApartment === index) &&
+                  <div>
+                    <h3> Apartment {index + 1}</h3>
+                    <p>Property at {value.street} {value.city}, {value.state} {value.zip} in {value.country}.</p>
+                  </div>
+                }
+                { this.state.currentApartment === -1 &&
+                  <button onClick = { () => this.selectApartment(index) }>More Details</button>
+                }
+                { this.state.currentApartment === index &&
+                  <div>
+                    <p>Managed by {manager.contact}.  Available to discuss at {manager.hours} at {manager.phone}.</p>
+                    <button onClick = { () => this.showAll() }>Back to Listings</button>
+                  </div>
+                }
                </div>
       })
     }
